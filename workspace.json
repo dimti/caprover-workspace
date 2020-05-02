@@ -1,0 +1,22 @@
+{
+    "captainVersion": "2",
+    "documentation": "Taken from https://hub.docker.com/repository/docker/dimti/workspace",
+    "displayName": "Workspace with PHP, Python and nodejs bindings",
+    "description": "A simple image for cli access and build your code on nodejs-deps and php-composer pacakacges",
+    "dockerCompose": {
+        "version": "2",
+        "services": {
+            "$$cap_appname": {
+                "image": "dimti/workspace:2.4-php7.1",
+                "restart": "always",
+                "volumes": [
+                    "/var/www:/var/www"
+                ]
+            }
+        }
+    },
+    "instructions": {
+        "start": "You can enter to the this container with bash and enjoy build your app inside hot environment",
+        "end": "Workspace is deployed and available as $$cap_appname"
+    }
+}
