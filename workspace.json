@@ -2,7 +2,7 @@
     "captainVersion": "2",
     "documentation": "Taken from https://hub.docker.com/repository/docker/dimti/workspace",
     "displayName": "Workspace with PHP, Python and nodejs bindings",
-    "description": "A simple image for cli access and build your code on nodejs-deps and php-composer pacakacges",
+    "description": "A simple image for cli access and build your code on nodejs-deps and php-composer packages",
     "dockerCompose": {
         "version": "2",
         "services": {
@@ -10,7 +10,7 @@
                 "image": "dimti/workspace:2.4-php7.1",
                 "restart": "always",
                 "volumes": [
-                    "/var/www:/var/www"
+                    "$$cap_volume_path:/var/www"
                 ]
             }
         }
@@ -18,5 +18,14 @@
     "instructions": {
         "start": "You can enter to the this container with bash and enjoy build your app inside hot environment",
         "end": "Workspace is deployed and available as $$cap_appname"
-    }
+    },
+    "variables": [
+        {
+            "id": "$$cap_volume_path",
+            "label": "Your website persistent volume full path",
+            "description": "Get full path of the persistent volume from other container and put into this",
+            "defaultValue": "",
+            "validRegex": "/^.*$/"
+        }
+    ]
 }
