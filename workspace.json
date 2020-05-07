@@ -7,7 +7,18 @@
         "version": "2",
         "services": {
             "$$cap_appname": {
-                "image": "dimti/workspace:2.4-php7.1",
+                "dockerfileLines": [
+                    "FROM dimti/workspace:2.4-php7.1",
+                    "RUN usermod -g $$cap_work_user_gid -u $$cap_work_user_uid laradock",
+                    "RUN ssh-keygen -f /tmp/id_rsa -N ''",
+                    "RUN rm -f /etc/service/sshd/down",
+                    "RUN cat /tmp/id_rsa.pub > /root/.ssh/authorized_keys",
+                    "RUN echo \"$$cap_public_key\" >> /root/.ssh/authorized_keys",
+                    "RUN cat /tmp/id_rsa.pub >> /root/.ssh/id_rsa.pub && cat /tmp/id_rsa >> /root/.ssh/id_rsa",
+                    "RUN rm -f /tmp/id_rsa* && chmod 644 /root/.ssh/authorized_keys /root/.ssh/id_rsa.pub",
+                    "RUN chmod 400 /root/.ssh/id_rsa && cp -rf /root/.ssh /home/laradock", 
+                    "RUN chown -R laradock:laradock /home/laradock/.ssh"
+                ],
                 "restart": "always",
                 "volumes": [
                     "$$cap_volume_path:/var/www"
@@ -24,8 +35,27 @@
             "id": "$$cap_volume_path",
             "label": "Your website persistent volume full path",
             "description": "Get full path of the persistent volume from other container and put into this",
-            "defaultValue": "",
-            "validRegex": "/^.*$/"
+            "defaultValue": ""
+        },
+        {
+            "id": "$$cap_work_user_gid",
+            "label": "Work user GID",
+            "description": "User group id best choice of web GID user, example 33 as www-data",
+            "defaultValue": "33",
+            "validRegex": "/^\\d*$/"
+        },
+        {
+            "id": "$$cap_work_user_uid",
+            "label": "Work user UID",
+            "description": "User id best choice of web UID user, example 33 as www-data",
+            "defaultValue": "33",
+            "validRegex": "/^\\d*$/"
+        },
+        {
+            "id": "$$cap_public_key",
+            "label": "Your local host public key",
+            "description": "Local unix host user public key used for solve ssh proxy to containers",
+            "defaultValue": ""
         }
     ]
 }
