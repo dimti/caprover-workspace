@@ -19,6 +19,7 @@
                     "RUN chmod 400 /root/.ssh/id_rsa && cp -rf /root/.ssh /home/laradock", 
                     "RUN chown -R laradock:laradock /home/laradock/.ssh"
                 ],
+                "notExposeAsWebApp": "true",
                 "restart": "always",
                 "volumes": [
                     "$$cap_volume_path:/var/www"
