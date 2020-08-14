@@ -14,9 +14,9 @@
                     "RUN rm -f /etc/service/sshd/down",
                     "RUN cat /tmp/id_rsa.pub > /root/.ssh/authorized_keys",
                     "RUN echo \"$$cap_public_key\" >> /root/.ssh/authorized_keys",
-                    "RUN cat /tmp/id_rsa.pub >> /root/.ssh/id_rsa.pub && cat /tmp/id_rsa >> /root/.ssh/id_rsa",
+                    "RUN cat /tmp/id_rsa.pub > /root/.ssh/id_rsa.pub && cat /tmp/id_rsa > /root/.ssh/id_rsa",
                     "RUN rm -f /tmp/id_rsa* && chmod 644 /root/.ssh/authorized_keys /root/.ssh/id_rsa.pub",
-                    "RUN chmod 400 /root/.ssh/id_rsa && cp -rf /root/.ssh /home/laradock", 
+                    "RUN chmod 400 /root/.ssh/id_rsa && cp -rf /root/.ssh /home/laradock",
                     "RUN chown -R laradock:laradock /home/laradock/.ssh"
                 ],
                 "notExposeAsWebApp": "true",
